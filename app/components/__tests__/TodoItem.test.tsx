@@ -109,8 +109,31 @@ describe("TodoItem Component", () => {
 
   // EJERCICIO 1: Completa el siguiente test para verificar que el componente
   // muestra correctamente el texto de una tarea con caracteres especiales
-  it("renderiza correctamente una tarea con caracteres especiales", () => {
-    // TODO: Implementar el test siguiendo el patrón Prepare, Execute, Validate
-    // Pista: Debes verificar que caracteres como &, <, >, ", etc. se muestren correctamente
-  });
+it("renderiza correctamente una tarea con caracteres especiales", () => {
+  // Prepare: tarea con caracteres especiales
+  const mockTodo = {
+    id: 2,
+    text: `Comprar pan & leche <importante> "urgente"`,
+    completed: false,
+  };
+  const mockToggle = jest.fn();
+  const mockDelete = jest.fn();
+
+  // Execute: renderizamos el componente con la tarea especial
+  render(
+    <TodoItem
+      id={mockTodo.id}
+      text={mockTodo.text}
+      completed={mockTodo.completed}
+      onToggle={mockToggle}
+      onDelete={mockDelete}
+      dataTestId={`todo-item-${mockTodo.id}`}
+    />
+  );
+
+  // Validate: el contenido debe mostrarse correctamente en pantalla
+  const item = screen.getByTestId("todo-item-2");
+  expect(item).toHaveTextContent(`Comprar pan & leche <importante> "urgente"`);
+});
+
 });
